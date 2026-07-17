@@ -8,7 +8,7 @@ spec:
   sources:
   - repoURL: https://prometheus-community.github.io/helm-charts
     chart: kube-prometheus-stack
-    targetRevision: "75.*"            # przypnij major — świadome upgrade'y
+    targetRevision: "75.*"
     helm:
       valueFiles:
       - $values/values/kube-prometheus-stack.yaml
@@ -22,4 +22,4 @@ spec:
     automated: { prune: true, selfHeal: true }
     syncOptions:
     - CreateNamespace=true
-    - ServerSideApply=true            # WYMAGANE: CRD Prometheusa są za duże na client-side apply
+    - ServerSideApply=true

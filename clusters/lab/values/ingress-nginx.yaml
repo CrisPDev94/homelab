@@ -1,0 +1,13 @@
+controller:
+  hostNetwork: true
+  kind: DaemonSet
+  nodeSelector:
+    kubernetes.io/hostname: srv1
+  service:
+    enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
