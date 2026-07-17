@@ -12,7 +12,7 @@ spec:
     helm:
       valueFiles:
       - $values/values/kube-prometheus-stack.yaml
-  - repoURL: https://github.com/TWOJ_USER/homelab.git
+  - repoURL: https://github.com/CrisPDev94/homelab.git
     targetRevision: main
     ref: values
   destination:
