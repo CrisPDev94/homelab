@@ -1,0 +1,58 @@
+prometheus:
+  prometheusSpec:
+    retention: 3d
+    scrapeInterval: 60s
+    evaluationInterval: 60s
+    nodeSelector: { kubernetes.io/hostname: srv1 }
+    resources:
+      requests: { cpu: 200m, memory: 700Mi }
+      limits: { memory: 1200Mi }
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: ["ReadWriteOnce"]
+          resources: { requests: { storage: 15Gi } }
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+
+alertmanager:
+  alertmanagerSpec:
+    nodeSelector: { kubernetes.io/hostname: srv1 }
+    resources:
+      requests: { memory: 64Mi }
+      limits: { memory: 128Mi }
+
+grafana:
+  adminPassword: null
+  admin:
+    existingSecret: grafana-admin
+  nodeSelector: { kubernetes.io/hostname: srv1 }
+  resources:
+    requests: { memory: 160Mi }
+    limits: { memory: 300Mi }
+  persistence:
+    enabled: false
+  sidecar:
+    dashboards: { enabled: true, searchNamespace: ALL }
+    datasources: { enabled: true }
+  additionalDataSources:
+  - name: Loki
+    type: loki
+    url: http://loki-gateway.monitoring.svc
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts: [grafana.94.152.212.103.nip.io]
+
+kubeEtcd: { enabled: false }
+kubeScheduler: { enabled: false }
+kubeControllerManager: { enabled: false }
+kubeProxy: { enabled: false }
+
+prometheusOperator:
+  nodeSelector: { kubernetes.io/hostname: srv1 }
+  resources:
+    requests: { memory: 100Mi }
+    limits: { memory: 200Mi }
