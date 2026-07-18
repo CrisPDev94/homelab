@@ -9,6 +9,8 @@ spec:
     repoURL: https://github.com/CrisPDev94/homelab.git
     targetRevision: main
     path: clusters/lab/apps
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
